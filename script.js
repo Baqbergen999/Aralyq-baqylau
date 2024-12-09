@@ -42,11 +42,26 @@ function addStudent() {
 };
 
 
-function applyDecreaseToTop()  {
+function applyDecreaseToTop() {
     let nameOfGroup = prompt("Топтың атын енгізіңіз:");
-    let prossent = prompt("Қанша пайыз төмендету керек:");
-    if (nameOfGroup == "24/7") {
-        return 
+    let percent = +prompt("Қанша пайыз төмендету керек:");
+
+    if (isNaN(percent) || percent < 0 || percent > 100) {
+        return "Қате пайыздық мән! Пайыз 0-100 арасында болуы керек.";
+    }
+
+    let studentsUpdated = false;
+    school.students.forEach(student => {
+        if (student.top === nameOfGroup) {
+            student.progress -= student.progress * (percent / 100);
+            studentsUpdated = true;
+        }
+    });
+
+    if (studentsUpdated) {
+        return `${nameOfGroup} тобының барлық студенттерінің үлгерімі ${percent}% төмендетілді.`;
+    } else {
+        return `Топ "${nameOfGroup}" табылмады.`;
     }
 }
 while (true) {
